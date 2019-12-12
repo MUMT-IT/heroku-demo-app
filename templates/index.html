@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block part %}Index{% endblock %}
+{% block page_content %}
+<h1 class="title">Welcome {{ who.upper() }}</h1>
+<a href="{{ url_for('greet', greeting='Hello') }}">Greeting page</a>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    alert("We are in greeting page.");
+</script>
+{% endblock %}
