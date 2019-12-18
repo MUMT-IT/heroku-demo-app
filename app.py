@@ -3,9 +3,11 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from wtforms_alchemy import ModelForm
 
 app = Flask(__name__)  # create flask application
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SECRET_KEY'] = 'genius1'
 
 db = SQLAlchemy(app)
 migration = Migrate(app, db)
@@ -19,9 +21,11 @@ class User(db.Model):
     firstname = db.Column('firstname', db.String(), nullable=True)
     lastname = db.Column('lastname', db.String(), nullable=True)
 
+class UserForm(ModelForm):
+    class Meta:
+        model = User
 
 admin.add_view(ModelView(User, db.session))
-
 
 @app.route('/')
 def index():
@@ -31,7 +35,7 @@ def index():
 
 @app.route('/greeting/<greeting>')
 def greet(greeting):
-    return render_template('greet.html', greeting=greeting)
+    return render_template('greet.html', greeting=greeting, form=UserForm())
 
 
 if __name__ == '__main__':

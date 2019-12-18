@@ -3,5 +3,11 @@
 {% block page_content %}
     <h1>{{ greeting }}</h1>
     <h2>Please log in</h2>
+    <form>
+        {{ form.csrf_token }}
+        {{ form.firstname.label(class='label') }} {{ form.firstname(size=40, class='input') }}
+        {{ form.lastname.label(class='label') }} {{ form.lastname(size=40, class='input') }}
+        <input type="submit" class="button" value="Go">
+    </form>
     <a href="{{ url_for('index') }}">Home</a>
 {% endblock %}
